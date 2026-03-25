@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="it-IT">
+<html lang="it-IT" id="top">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <!-- Dopo il deploy: sostituire https://www.plmassistance.it/ in canonical, og:*, twitter:* e JSON-LD se il dominio reale è diverso -->
     <title>PLM Assistance Potenza | assistenza impianti idraulici, climatizzazione e tecnica</title>
     <meta name="description" content="PLM Assistance di Michele Pietrafesa a Potenza: installazione e manutenzione impianti idraulici, riscaldamento e condizionamento, assistenza tecnica per aziende e privati. Tel. 097168103." />
@@ -109,18 +109,32 @@
       <svg class="waIcon waIcon--float" aria-hidden="true" focusable="false" width="28" height="28"><use href="#icon-whatsapp"/></svg>
     </a>
 
-    <header class="topbar" role="banner">
+    <header class="topbar" id="site-header" role="banner">
       <div class="container">
         <div class="nav">
-          <div class="brand" aria-label="Plm Assistance di Michele Pietrafesa">
+          <a class="brand" href="#top" aria-label="Plm Assistance di Michele Pietrafesa — torna in alto">
             <div class="logoMark" aria-hidden="true">PML</div>
             <div class="brandTitle">
               <strong>Plm Assistance</strong>
               <span>di Michele Pietrafesa</span>
             </div>
-          </div>
+          </a>
 
-          <nav class="navLinks" aria-label="Navigazione">
+          <button
+            type="button"
+            class="navToggle"
+            id="nav-toggle"
+            aria-expanded="false"
+            aria-controls="primary-nav"
+            aria-label="Apri il menu di navigazione"
+          >
+            <span class="navToggle-bars" aria-hidden="true"></span>
+          </button>
+
+          <div class="navBackdrop" id="nav-backdrop" aria-hidden="true"></div>
+
+          <nav class="navLinks" id="primary-nav" aria-label="Navigazione principale">
+            <a href="#top">Plm Assistance</a>
             <a href="#servizi">Servizi</a>
             <a href="#partner">Partner</a>
             <a href="#contatti">Contatti</a>
@@ -452,6 +466,60 @@
         </footer>
       </div>
     </main>
+
+    <script>
+      (function () {
+        var header = document.getElementById("site-header");
+        var toggle = document.getElementById("nav-toggle");
+        var backdrop = document.getElementById("nav-backdrop");
+        var nav = document.getElementById("primary-nav");
+        if (!header || !toggle || !backdrop || !nav) return;
+
+        function openMenu() {
+          header.classList.add("is-nav-open");
+          document.body.classList.add("nav-no-scroll");
+          toggle.setAttribute("aria-expanded", "true");
+          toggle.setAttribute("aria-label", "Chiudi il menu di navigazione");
+          backdrop.setAttribute("aria-hidden", "false");
+        }
+
+        function closeMenu() {
+          header.classList.remove("is-nav-open");
+          document.body.classList.remove("nav-no-scroll");
+          toggle.setAttribute("aria-expanded", "false");
+          toggle.setAttribute("aria-label", "Apri il menu di navigazione");
+          backdrop.setAttribute("aria-hidden", "true");
+        }
+
+        function isMobileNav() {
+          return window.matchMedia("(max-width: 719px)").matches;
+        }
+
+        toggle.addEventListener("click", function () {
+          if (header.classList.contains("is-nav-open")) closeMenu();
+          else openMenu();
+        });
+
+        backdrop.addEventListener("click", closeMenu);
+
+        nav.querySelectorAll("a[href^='#']").forEach(function (link) {
+          link.addEventListener("click", function () {
+            if (isMobileNav()) closeMenu();
+          });
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && header.classList.contains("is-nav-open")) {
+            closeMenu();
+            toggle.focus();
+          }
+        });
+
+        window.addEventListener("resize", function () {
+          if (!isMobileNav()) closeMenu();
+        });
+      })();
+    </script>
   </body>
 </html>
 
