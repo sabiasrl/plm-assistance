@@ -38,6 +38,27 @@ body{
 
 a{ color:inherit; text-decoration:none; }
 
+.svgSprite{
+  position:absolute;
+  width:0;
+  height:0;
+  overflow:hidden;
+}
+
+.waIcon{
+  flex-shrink:0;
+  display:block;
+  color:inherit;
+}
+
+.waIcon--float{
+  color:#fff;
+}
+
+.waIcon--inline{
+  color:#19c37d;
+}
+
 .container{
   width:100%;
   max-width:1100px;
@@ -126,37 +147,39 @@ a{ color:inherit; text-decoration:none; }
   padding:42px 0 24px;
 }
 
+/* Mobile: testo → pulsanti (WhatsApp / Chiama) → logo → contatti */
 .heroPresentazione{
   display:flex;
   flex-direction:column;
+  align-items:stretch;
   gap:22px;
-}
-
-.heroTop{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:20px;
 }
 
 .heroLead{
   width:100%;
   text-align:left;
+  order:1;
+}
+
+.heroPresentazione .ctaRow{
+  order:2;
 }
 
 .heroLogo{
   flex-shrink:0;
+  order:3;
   display:flex;
   align-items:center;
   justify-content:center;
   width:100%;
   max-width:260px;
   margin:0 auto;
-  padding:4px 8px 0;
+  padding:0 8px 0;
 }
 
 .heroLogoImg{
   width:100%;
+  max-width:100%;
   max-height:120px;
   height:auto;
   object-fit:contain;
@@ -199,10 +222,6 @@ a{ color:inherit; text-decoration:none; }
   font-size:15px;
 }
 
-.heroPresentazione .ctaRow{
-  margin-top:0;
-}
-
 .ctaRow{
   display:flex;
   flex-wrap:wrap;
@@ -232,6 +251,7 @@ a{ color:inherit; text-decoration:none; }
 }
 
 .heroContact{
+  order:4;
   display:grid;
   grid-template-columns:1fr;
   gap:12px;
@@ -323,10 +343,169 @@ section{
   font-size:14px;
 }
 
-.gridCards{
+.phoneLines{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:6px 8px;
+}
+
+.miniInfo span.phoneLines,
+.contactItem span.phoneLines{
+  display:flex;
+}
+.phoneSep{
+  color:var(--muted);
+  opacity:.55;
+  user-select:none;
+}
+
+/* I nostri servizi — card ridisegnate */
+.serviceGrid{
   display:grid;
   grid-template-columns:1fr;
+  gap:20px;
+}
+
+.serviceCard{
+  position:relative;
+  margin:0;
+  padding:24px 22px 22px;
+  border-radius:22px;
+  background: rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  --bar: var(--brand);
+  --bar2: var(--brand2);
+}
+
+.serviceCard::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:3px;
+  border-radius:22px 22px 0 0;
+  background: linear-gradient(90deg, var(--bar), var(--bar2));
+  opacity:.95;
+}
+
+.serviceCard[data-tone="blue"]{ --bar:#4f8cff; --bar2:#7aa8ff; }
+.serviceCard[data-tone="teal"]{ --bar:#2ec4b6; --bar2:#4f8cff; }
+.serviceCard[data-tone="violet"]{ --bar:#a78bfa; --bar2:#38d6c3; }
+.serviceCard[data-tone="amber"]{ --bar:#f5b942; --bar2:#f07818; }
+.serviceCard[data-tone="rose"]{ --bar:#f472b6; --bar2:#a78bfa; }
+.serviceCard[data-tone="slate"]{ --bar:#94a3b8; --bar2:#64748b; }
+
+.serviceCardHead{
+  display:flex;
+  align-items:flex-start;
   gap:16px;
+}
+
+.serviceIcon{
+  flex-shrink:0;
+  width:52px;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  line-height:1;
+  border-radius:16px;
+  background: rgba(255,255,255,.06);
+  border:1px solid var(--border);
+}
+
+.serviceCardTitles{
+  min-width:0;
+  flex:1;
+}
+
+.serviceCardTitles h3{
+  margin:0 0 10px;
+  font-size:17px;
+  font-weight:700;
+  letter-spacing:-.2px;
+  line-height:1.25;
+  color:var(--text);
+}
+
+.servicePill{
+  display:inline-block;
+  font-size:12px;
+  color:var(--muted);
+  padding:5px 11px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: rgba(0,0,0,.12);
+}
+
+.serviceList{
+  list-style:none;
+  margin:18px 0 0;
+  padding:0;
+}
+
+.serviceList li{
+  position:relative;
+  margin:0;
+  padding:10px 0 10px 18px;
+  font-size:14px;
+  line-height:1.45;
+  color:var(--muted);
+  border-top:1px solid rgba(255,255,255,.06);
+}
+
+.serviceList li:first-child{
+  border-top:0;
+  padding-top:0;
+}
+
+.serviceList li::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:1.15em;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background: linear-gradient(135deg, var(--bar), var(--bar2));
+  opacity:.9;
+}
+
+.serviceList li:first-child::before{
+  top:.35em;
+}
+
+.datumList{
+  margin:14px 0 0;
+  padding-left:0;
+  list-style:none;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.card ul.datumList{
+  margin-top:14px;
+  padding-left:0;
+  list-style:none;
+}
+
+.datumList li{
+  margin:12px 0;
+  padding-left:0;
+  line-height:1.45;
+}
+
+.datumList strong{
+  color:var(--text);
+  font-weight:600;
+}
+
+.ibanPlaceholder{
+  font-style:italic;
+  opacity:.88;
 }
 
 .card{
@@ -375,6 +554,14 @@ section{
   gap:12px;
 }
 
+.partnerMain{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:0;
+  flex:1;
+}
+
 .partnerLogo{
   width:46px;
   height:46px;
@@ -387,6 +574,65 @@ section{
   font-weight:900;
   letter-spacing:.2px;
   color: #d7e3ff;
+  flex-shrink:0;
+}
+
+.partnerLogo--img{
+  width:auto;
+  min-width:108px;
+  height:56px;
+  padding:8px 14px;
+  background: rgba(255,255,255,.96);
+  border-color: rgba(255,255,255,.2);
+}
+
+.partnerLogo--img img{
+  display:block;
+  max-height:44px;
+  max-width:140px;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  object-position:center;
+}
+
+.fbIcon{
+  display:block;
+  color:#1877f2;
+}
+
+.fbIcon--footer{
+  flex-shrink:0;
+}
+
+.contactItem .miniIcon.miniIcon--fb{
+  background: rgba(24,119,242,.12);
+  border-color: rgba(24,119,242,.35);
+}
+
+.footerLinks{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:6px 8px;
+}
+
+.footerMail{
+  text-decoration:underline;
+  text-decoration-color: rgba(79,140,255,.45);
+}
+
+.footerFb{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  text-decoration:underline;
+  text-decoration-color: rgba(24,119,242,.45);
+  color:var(--muted);
+}
+
+.footerFb:hover{
+  color:var(--text);
 }
 .partnerMeta{
   flex:1;
@@ -427,6 +673,11 @@ section{
 .contactItem .miniIcon{
   background: rgba(56,214,195,.12);
   border-color: rgba(56,214,195,.28);
+}
+
+.contactItem .miniIcon.miniIcon--wa{
+  background: rgba(25,195,125,.12);
+  border-color: rgba(25,195,125,.35);
 }
 
 .contactItem strong{
@@ -470,13 +721,11 @@ section{
 }
 
 /* Floating WhatsApp */
-.waFloat{
+a.waFloat{
   position:fixed;
   right:14px;
   bottom:14px;
   z-index:100;
-}
-.waFloat a{
   display:flex;
   align-items:center;
   justify-content:center;
@@ -486,52 +735,65 @@ section{
   background: linear-gradient(135deg, #19c37d, #0ea96a);
   border:1px solid rgba(255,255,255,.18);
   box-shadow: 0 18px 35px rgba(0,0,0,.35);
-  font-size:22px;
 }
-.waFloat a:focus{
+a.waFloat:focus-visible{
   outline: none;
   box-shadow: 0 0 0 4px rgba(25,195,125,.35), 0 18px 35px rgba(0,0,0,.35);
 }
 
+
 /* Desktop enhancements */
 @media (min-width: 720px){
-  .heroTop{
-    flex-direction:row;
-    align-items:flex-start;
-    justify-content:flex-start;
-    gap:32px;
+  .heroPresentazione{
+    display:grid;
+    grid-template-columns: minmax(120px, 220px) minmax(0, 1fr);
+    grid-template-areas:
+      "logo lead"
+      "cta cta"
+      "contact contact";
+    column-gap:32px;
+    row-gap:26px;
+    align-items:start;
   }
   .heroLogo{
-    width:auto;
+    grid-area:logo;
+    order:0;
+    width:100%;
     max-width:220px;
     margin:0;
     padding:6px 0 0;
-    align-self:flex-start;
+    justify-self:start;
   }
   .heroLogoImg{
     max-height:140px;
   }
   .heroLead{
-    flex:1;
+    grid-area:lead;
+    order:0;
     min-width:0;
   }
-  .hero h1{ font-size:40px; }
-  .heroCard{ padding:28px; }
-  .heroPresentazione{ gap:26px; }
+  .heroPresentazione .ctaRow{
+    grid-area:cta;
+    order:0;
+  }
   .heroContact{
+    grid-area:contact;
+    order:0;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap:14px;
     padding-top:26px;
   }
+  .hero h1{ font-size:40px; }
+  .heroCard{ padding:28px; }
   .visualGrid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
   .visualCard img{ height:210px; }
-  .gridCards{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .serviceGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .contactGrid{ grid-template-columns: 1fr 1fr; }
   .mapFrame{ height:360px; }
   .partnerRow{ grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
 
 @media (min-width: 980px){
-  .gridCards{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .serviceGrid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
 }
 
