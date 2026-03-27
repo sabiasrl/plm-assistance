@@ -1,0 +1,5 @@
+# https://www.plmassistance.it/
+User-agent: *
+Allow: /
+
+Sitemap: https://www.plmassistance.it/sitemap.xml
