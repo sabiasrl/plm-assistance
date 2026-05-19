@@ -724,7 +724,7 @@ main#main-content > .container > footer.footer{ order:7; }
   max-width:100%;
   height:auto;
   border-radius:var(--radius-md);
-  box-shadow:var(--shadow-sm);
+  box-shadow:none;
 }
 
 .heroLead{
@@ -985,6 +985,30 @@ main#main-content > .container > footer.footer{ order:7; }
   .hero .heroContact .miniInfo a:focus-visible{
     opacity:.88;
   }
+
+  .hero .heroContact .phoneLines{
+    gap:8px 12px;
+  }
+
+  .hero .heroContact .phoneLines a{
+    font-size:16px;
+    font-weight:600;
+    line-height:1.35;
+    color:var(--brand);
+    text-decoration:none;
+    -webkit-tap-highlight-color:rgba(var(--brand-rgb), .15);
+  }
+
+  .hero .heroContact .phoneLines a:hover,
+  .hero .heroContact .phoneLines a:focus-visible{
+    color:var(--brand2);
+    opacity:1;
+  }
+
+  .hero .heroContact .phoneSep{
+    font-size:15px;
+    opacity:.5;
+  }
 }
 
 .miniInfo{
@@ -1186,7 +1210,14 @@ section{
 
 .phoneLines-vcard{
   white-space:nowrap;
-  font-weight:600;
+}
+
+#contatti .phoneLines a[href^="tel:"]{
+  font-weight:700;
+}
+
+#contatti .phoneLines-vcard{
+  font-weight:400;
 }
 
 /* I nostri servizi — testo e immagini accoppiati */
@@ -1217,8 +1248,63 @@ section{
   font-size:12.5px;
 }
 
-.serviceBlock .serviceCard{
+.serviceShowcase .serviceBlock{
+  padding:22px 20px;
+  border-radius:var(--radius-xl);
+  background:var(--card);
+  border:1px solid rgba(15,15,15,.07);
+  box-shadow:var(--shadow-sm);
+  gap:20px;
+}
+
+.serviceShowcase .serviceCard{
   margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+
+.serviceShowcase .serviceCard:hover{
+  box-shadow:none;
+}
+
+.serviceShowcase .serviceIcon{
+  background:transparent;
+  border-color:transparent;
+  color:var(--bar);
+}
+
+.serviceShowcase .serviceIcon .serviceIconSvg{
+  color:var(--bar);
+}
+
+.serviceShowcase .serviceCardTitles h3{
+  font-size:1.2rem;
+  letter-spacing:-.03em;
+}
+
+.serviceShowcase .servicePill{
+  background:transparent;
+  border-color:var(--border);
+  color:var(--text);
+  font-weight:600;
+}
+
+.serviceShowcase .serviceList{
+  margin-top:16px;
+}
+
+.serviceShowcase .serviceList li{
+  border-top:0;
+  padding:6px 0 6px 1.15rem;
+}
+
+.serviceShowcase .serviceList li::before{
+  top:0.65em;
+  width:5px;
+  height:5px;
 }
 
 .serviceGrid{
@@ -1868,19 +1954,79 @@ a.waFloat:focus-visible{
   }
   .visualGrid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
   .visualCard img{ height:210px; }
-  .serviceBlock{
+  .serviceShowcase{
+    gap:28px;
+  }
+  .serviceShowcase .serviceBlock{
+    padding:28px 32px 32px;
+    gap:24px;
+  }
+  .serviceShowcase .serviceCard{
     display:grid;
-    grid-template-columns:minmax(280px, 36%) minmax(0, 1fr);
-    gap:20px;
+    grid-template-columns:minmax(260px, 360px) minmax(0, 1fr);
+    grid-template-rows:auto auto;
+    column-gap:36px;
+    row-gap:0;
     align-items:start;
   }
+  .serviceShowcase .serviceCardHead{
+    grid-column:1;
+    grid-row:1 / span 2;
+    flex-direction:row;
+    align-items:flex-start;
+    gap:16px;
+    padding-top:4px;
+  }
+  .serviceShowcase .serviceCardTitles h3{
+    font-size:1.45rem;
+    margin-bottom:8px;
+  }
+  .serviceShowcase .serviceIcon{
+    width:56px;
+    height:56px;
+    font-size:28px;
+  }
+  .serviceShowcase .serviceList{
+    grid-column:2;
+    grid-row:1 / span 2;
+    margin:0;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:12px 28px;
+    align-content:start;
+  }
+  .serviceShowcase .serviceList li{
+    padding:4px 0 4px 1rem;
+    font-size:14.5px;
+  }
+  .serviceShowcase .serviceList li::before{
+    top:0.55em;
+  }
   .serviceVisuals{
-    gap:14px;
+    width:100%;
+    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    gap:16px;
   }
   .serviceVisuals .visualCard img{
-    height:168px;
+    width:100%;
+    height:auto;
+    aspect-ratio:4 / 3;
+    object-fit:cover;
+  }
+  .serviceVisuals .visualCaption{
+    padding:12px 14px;
+    font-size:13px;
   }
   .serviceVisuals--wide{
+    grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+  }
+  #assistenza-tecnica .serviceVisuals,
+  #condizionamento .serviceVisuals,
+  #impianti-idraulici .serviceVisuals{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    max-width:720px;
+  }
+  #caldaie-gas-biomassa .serviceVisuals{
     grid-template-columns:repeat(3, minmax(0, 1fr));
   }
   .serviceGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1896,6 +2042,13 @@ a.waFloat:focus-visible{
 
 @media (min-width: 980px){
   .serviceGrid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .serviceVisuals--wide{
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+  }
+  #caldaie-gas-biomassa .serviceVisuals{
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    max-width:none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce){
